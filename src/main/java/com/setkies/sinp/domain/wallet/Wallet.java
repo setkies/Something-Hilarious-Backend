@@ -16,6 +16,4 @@ public class Wallet {
 
     private Long money;
 
-    //TODO 돈 충전
-
 }

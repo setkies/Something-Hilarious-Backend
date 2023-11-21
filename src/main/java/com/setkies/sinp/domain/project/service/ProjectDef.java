@@ -5,6 +5,7 @@ import com.setkies.sinp.domain.project.Status;
 import com.setkies.sinp.domain.project.dto.ProjectCreateReq;
 import com.setkies.sinp.domain.project.repo.ProjectRepo;
 import com.setkies.sinp.domain.user.User;
+import java.util.Objects;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -26,5 +27,36 @@ public class ProjectDef {
                 .build();
 
         projectRepo.save(newProject);
+    }
+
+    public Long updateProject(Long id, ProjectCreateReq projectCreateReq, User user){
+        Project project = projectRepo.findById(id).orElseThrow();
+
+        if(!Objects.equals(project.getAuthor().getId(), user.getId())){
+            throw new RuntimeException();
+        }
+
+        project.updateProject(projectCreateReq);
+        return project.getId();
+    }
+
+    public Long changeProjectStatus(Long id, Status status, User user){
+        Project project = projectRepo.findById(id).orElseThrow();
+
+        if(!Objects.equals(project.getAuthor().getId(), user.getId())){
+            throw new RuntimeException();
+        }
+        project.changeProjectStatus(status);
+        return project.getId();
+    }
+
+    public Long deleteProject(Long id,User user){
+        Project project = projectRepo.findById(id).orElseThrow();
+
+        if(!Objects.equals(project.getAuthor().getId(), user.getId())){
+            throw new RuntimeException();
+        }
+        projectRepo.delete(project);
+        return project.getId();
     }
 }
