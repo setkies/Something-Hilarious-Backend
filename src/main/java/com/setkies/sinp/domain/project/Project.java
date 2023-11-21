@@ -1,5 +1,6 @@
 package com.setkies.sinp.domain.project;
 
+import com.setkies.sinp.domain.project.dto.ProjectCreateReq;
 import com.setkies.sinp.domain.user.User;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -37,8 +38,22 @@ public class Project {
 
     private Long targetFund;
     private LocalDateTime fundEndTime;
+    private Long nowFund = 0L;
 
     @ManyToOne
     private User author;
+
+    public void updateProject(ProjectCreateReq projectCreateReq){
+        this.fundEndTime = projectCreateReq.getFundEndTime();
+        this.introduceUrl = projectCreateReq.getIntroduceUrl();
+        this.summary = projectCreateReq.getSummary();
+        this.targetFund = projectCreateReq.getTargetFund();
+        this.thumbnail = projectCreateReq.getThumbnail();
+        this.name = projectCreateReq.getName();
+    }
+
+    public void changeProjectStatus(Status status){
+        this.status = status;
+    }
 
 }
