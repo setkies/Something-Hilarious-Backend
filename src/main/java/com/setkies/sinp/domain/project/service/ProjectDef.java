@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 public class ProjectDef {
     private final ProjectRepo projectRepo;
 
-    public void createProject(ProjectCreateReq projectCreateReq, User user){
+    public Long createProject(ProjectCreateReq projectCreateReq, User user){
         Project newProject = Project.builder()
                 .status(Status.PENDING)
                 .fundEndTime(projectCreateReq.getFundEndTime())
@@ -26,7 +26,7 @@ public class ProjectDef {
                 .author(user)
                 .build();
 
-        projectRepo.save(newProject);
+        return projectRepo.save(newProject).getId();
     }
 
     public Long updateProject(Long id, ProjectCreateReq projectCreateReq, User user){
