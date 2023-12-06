@@ -1,5 +1,52 @@
 spring:
+
   datasource:
-    url:
-    username: root
-    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url : ${URL}
+    username: ${USER}
+    password: ${PASSWORD}
+
+  logging:
+    level:
+      org:
+        hibernate:
+          SQL: debug
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_SECRET_KEY}
+            redirect-uri: ${GOOGLE_REDIRECT_URL}
+            scope:
+              - profile
+              - email
+
+  jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+auth:
+  jwt:
+    header: ${HEADER}
+    secret: ${SECRET}
+    accessExp: ${ACCESS_EXP}
+    refreshExp: ${REFRESH_EXP}
+    prefix: ${PREFIX}
+
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true
+
+server:
+  servlet:
+    context-path: /api

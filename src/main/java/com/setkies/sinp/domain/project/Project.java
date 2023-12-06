@@ -38,6 +38,8 @@ public class Project {
 
     private Long targetFund;
     private LocalDateTime fundEndTime;
+
+    @Builder.Default
     private Long nowFund = 0L;
 
     @ManyToOne
@@ -50,6 +52,10 @@ public class Project {
         this.targetFund = projectCreateReq.getTargetFund();
         this.thumbnail = projectCreateReq.getThumbnail();
         this.name = projectCreateReq.getName();
+    }
+
+    public void changeProjectFund(Long money){
+        this.nowFund += money;
     }
 
     public void changeProjectStatus(Status status){

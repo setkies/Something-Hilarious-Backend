@@ -1,0 +1,10 @@
+version: '3'
+services:
+  sinp-app:
+    env_file:
+      - .env
+    image: qlido/sinp
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./path/to/local/logs:/app/logs
