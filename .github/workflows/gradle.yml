@@ -42,3 +42,16 @@ jobs:
     # Docker Hub push (4)
     - name: docker Hub push
       run: docker push qlido/sinp
+
+    - name: Connect to WAS & Execute Application
+      uses: appleboy/ssh-action@v0.1.6
+      with:
+        host: ${{ secrets.WAS_HOST }}
+        username: ${{ secrets.WAS_USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.WAS_SSH_PORT }}
+        script: |
+          cd /home/ubuntu/Something-Hilarious-Backend
+          docker-compose stop
+          docker-compose pull
+          docker-compose up -d
