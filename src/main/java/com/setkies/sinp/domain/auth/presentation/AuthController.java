@@ -1,5 +1,6 @@
 package com.setkies.sinp.domain.auth.presentation;
 
+import com.setkies.sinp.domain.auth.dto.LoginDto;
 import com.setkies.sinp.domain.auth.dto.RefreshAccessDto;
 import com.setkies.sinp.infrastructure.google.AuthService;
 import com.setkies.sinp.infrastructure.google.GoogleLoginService;
@@ -23,10 +24,10 @@ public class AuthController {
     private final GoogleLoginService googleLoginService;
     private final AuthService authService;
 
-    @GetMapping("/google")
+    @PostMapping("/google")
     @Operation(summary = "구글 로그인")
-    public TokenResponse loginOfGoogle(@Validated @RequestParam(name = "code") String code) {
-        return googleLoginService.execute(code);
+    public TokenResponse loginOfGoogle(@Validated @RequestBody LoginDto loginDto) {
+        return googleLoginService.execute(loginDto.code());
     }
 
     @PostMapping("/refresh")
