@@ -1,0 +1,35 @@
+name: Java CI with Gradle
+
+# master 브랜치에 push, PR 이벤트 발생시 동작.
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  deploy: 
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    # Spring Boot 어플리케이션 Build (1)
+    - name: Spring Boot Build
+      run: ./gradlew clean build --exclude-task test
+    
+    # Docker 이미지 Build (2)
+    - name: docker image build
+      run: docker build -t qlido/sinp .
+    
+    # DockerHub Login (3)
+    - name: docker login 
+      uses: docker/login-action@v2
+      with: 
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    # Docker Hub push (4)
+    - name: docker Hub push
+      run: docker push qlido/sinp
