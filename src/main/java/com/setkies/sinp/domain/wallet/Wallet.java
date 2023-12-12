@@ -16,7 +16,7 @@ public class Wallet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long money = 0L;
+    private Long money = 100000L;
 
     public void addMoney(Long addMoney){
         this.money += addMoney;
